@@ -1,0 +1,5 @@
+Lorem ipsum 1st line
+Lorem apsum 2nd line
+Lorem opsum 3rd line
+Lorem upsum 4th line
+Lorem /n /0 kaput.

@@ -10,13 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
+
 /**
+ * Function that reads a file until a \n or \0 is found.
  *
+ * @param fd As an argument we give a file descriptor prev got with open()
  *
+ * @return A buffer with the string of the x line of the file.
  */
 
 char	*get_next_line(int fd)
 {
+	char	buffer[256];
 
-	return (NULL);
+	read(fd, buffer, 256);
+
+	return (buffer);
 }
