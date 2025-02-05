@@ -22,8 +22,11 @@
 
 char	*get_next_line(int fd)
 {
-	char	buffer[256];
+	char	*buffer;
 
+	buffer = (char *) malloc(256 * sizeof(char));
+	if (!buffer)
+		return (NULL);
 	read(fd, buffer, 256);
 
 	return (buffer);

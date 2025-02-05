@@ -3,9 +3,10 @@
 int	main(void)
 {
 	int	fd;
+	char	*s;
 
 	fd = open("example.txt", O_RDONLY);
-	char s[] = ft_get_next_line(fd);
+	s = get_next_line(fd);
 
 	write(1, s, ft_strlen(s));
 	close(fd);
