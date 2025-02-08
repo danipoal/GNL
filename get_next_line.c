@@ -22,12 +22,14 @@
 
 char	*get_next_line(int fd)
 {
-	char	*buffer;
+	static char	*buffer;
+	int		bytes_readed;
 
-	buffer = (char *) malloc(256 * sizeof(char));
+	buffer = (char *) malloc(BUFFER_SIZE * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	read(fd, buffer, 256);
-
+	bytes_readed = read(fd, buffer, BUFFER_SIZE);
+	if (bytes_readed == 0)
+		return (NULL);
 	return (buffer);
 }

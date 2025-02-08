@@ -8,7 +8,12 @@ int	main(void)
 	fd = open("example.txt", O_RDONLY);
 	s = get_next_line(fd);
 
-	write(1, s, ft_strlen(s));
+	while (s)
+	{
+		write(1, s, ft_strlen(s));
+		free(s);
+		s = get_next_line(fd);
+	}
 	close(fd);
 	return (0);
 }

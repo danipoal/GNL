@@ -1,5 +1,15 @@
-Lorem ipsum 1st line
-Lorem apsum 2nd line
-Lorem opsum 3rd line
-Lorem upsum 4th line
-Lorem /n /0 kaput.
+1 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n Nulla pellentesque dignissim enim sit amet venenatis urna cursus eget. END
+2 Lorem apsum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \0 Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. END
+3 Lorem opsum tempor incididunt ut labore et dolore magna aliqua, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n \0 Amet dictum sit amet justo donec enim. END
+4 Lorem upsum sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Integer feugiat scelerisque varius morbi enim nunc faucibus. \n Gravida neque convallis a cras semper auctor. END
+5 Lorem /n /0 kaput. Nulla aliquet enim tortor at auctor urna nunc id. Vitae suscipit tellus mauris a diam maecenas sed enim ut. END
+6 Line six begins with an idea, flowing through the words to create meaning, yet somewhere along the way, we insert a \n or perhaps a \0 just to keep things interesting. END
+7 The seventh line follows the same rhythm, dancing between phrases, catching your eye with unexpected symbols. \0 Or maybe it's just a trick of the text. END
+8 Here we are at number eight, moving along steadily, like a well-oiled machine, processing each word carefully. \n But will you notice the hidden break? END
+9 Line nine sneaks in with a whisper, its presence barely noticed, but essential nonetheless. \n \0 A moment of pause before continuing. END
+10 A tenth line emerges, standing tall among its peers, offering insight and intrigue. \n What lies ahead, beyond this sequence of structured thoughts? END
+11 Eleven arrives, bringing a sense of familiarity, yet distinct in its approach, marked by a subtle \0 hint of something deeper. END
+12 This is twelve, a dozen strong, carrying the weight of words across the page. \n It holds secrets known only to those who read closely. END
+13 Lucky thirteen, or so they say, but what luck is there in letters arranged just so? \n \0 Perhaps meaning is found not in luck, but in understanding. END
+14 The penultimate line, number fourteen, a step away from completion, holding its breath before the finality of what comes next. \0 Do you see it? END
+15 At last, we arrive at fifteen, the journey concluded, yet the story lingers. \n Each word a fragment of a greater whole, ending as all things do: END
