@@ -10,9 +10,10 @@ int	main(void)
 
 	while (s)
 	{
-		write(1, s, ft_strlen(s));
+		write(1, s, strlen(s));
 		free(s);
 		s = get_next_line(fd);
+		write(1, "\n", 1);
 	}
 	close(fd);
 	return (0);
