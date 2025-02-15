@@ -1,10 +1,4 @@
-NAME = test
-
-CC = cc
-FLAGS = -Wall -Wextra -Werror 
-HEAD = test.h
-GNL = ../a.o
-
-SRCS = test.c test_utils.c
-OBJS = $(SRCS).c : .o
-
+all:
+	cc -g ../get_next_line.o ../get_next_line_utils.o test.c test.h
+f fclean:
+	rm -rf *.o *.h.gch *.out
