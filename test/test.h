@@ -7,6 +7,6 @@
 
 // Duplicadas
 //unsigned long	ft_strlcpy(char *dst, const char *src, unsigned long size);
-unsigned long	ft_strlen(const char *s);
+//unsigned long	ft_strlen(const char *s);
 
 #endif
