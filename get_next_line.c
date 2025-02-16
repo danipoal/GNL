@@ -43,30 +43,50 @@ char	*trim_endl(char **buffer)
  *
  * @return A buffer with the string of the x line of the file.
  */
-char	*get_next_line(int fd)
+char	*read_document(int fd, int *total_bytes, int *bytes_readed)
 {
 	static char	*buffer;
-	int		bytes_readed;
 	char	*line;
 	static char	*buffer_dir;
 
-
-	if (!buffer)
+	if (!buffer && *total_bytes >= *bytes_readed)
+		free(buffer_dir);
+	if (!buffer || *total_bytes >= *bytes_readed)
 	{
 		buffer = (char *) malloc(BUFFER_SIZE * sizeof(char));
 		if (!buffer)
 			return (NULL);
 		buffer_dir = buffer;			// First time we save mem, remember the true dir of the buffer to free
-			bytes_readed = read(fd, buffer, BUFFER_SIZE);
+			*bytes_readed += read(fd, buffer, BUFFER_SIZE);
 		if (bytes_readed == 0)
 			return (NULL);
 	}
 	line = trim_endl(&buffer);
+	*total_bytes += ft_strlen(line);
 	if(!line)
-	{
-		free(buffer_dir);
 		return (NULL);
-	}
 	return (line);
 }
 //TODO When the buff ends, if the read get something, coninue looping
+
+char	*get_next_line(int fd)
+{
+	char *line;
+	static int	total_bytes;
+	static int	bytes_readed;
+	char	*tmp;
+	
+	//total_bytes = 0;
+	line = read_document(fd, &total_bytes, &bytes_readed);
+	if (!line)
+	{
+		if (bytes_readed)
+		{
+			read(fd, tmp, total_bytes);
+			line = read_document(fd, &total_bytes, &bytes_readed);
+		}
+		else
+			return (NULL);
+	}
+	return (line);
+}
