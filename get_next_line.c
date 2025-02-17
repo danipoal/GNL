@@ -36,6 +36,45 @@ char	*trim_endl(char **buffer)
 }
 
 
+
+
+/** Crear funcion que resetee el buffer y tambien saque otra linea
+ * Si hay mas que leer, crea un nuevo buffer y hace un join a lo que quedaba de linea
+ * 
+ */
+// void	ft_join_buffer(char **buffer, char **buffer_dir, char **line)
+// {
+// 	char	*last_line;
+
+	
+// 	last_line = *line;
+// 	free(*line);
+
+// 	if (!buffer && *total_bytes >= *bytes_readed)
+// 		free(buffer_dir);
+// 	if (!buffer || *total_bytes >= *bytes_readed)
+// 	{
+// 		buffer = (char *) malloc(BUFFER_SIZE * sizeof(char));
+// 		if (!buffer)
+// 			return (NULL);
+// 		buffer_dir = buffer;			// First time we save mem, remember the true dir of the buffer to free
+// 			*bytes_readed += read(fd, buffer, BUFFER_SIZE);
+// 		if (bytes_readed == 0)
+// 			return (NULL);
+// 	}
+
+
+
+
+
+
+
+// 	ft_strjoin(last_line, )
+// }
+
+
+
+
 /**
  * Function that reads a file until a \n or \0 is found.
  *
@@ -48,20 +87,37 @@ char	*read_document(int fd, int *total_bytes, int *bytes_readed)
 	static char	*buffer;
 	char	*line;
 	static char	*buffer_dir;
+	char	*new_line;		// Only when the buff ended and the content continue
+	int	bytes;
 
-	if (!buffer && *total_bytes >= *bytes_readed)
-		free(buffer_dir);
 	if (!buffer || *total_bytes >= *bytes_readed)
 	{
 		buffer = (char *) malloc(BUFFER_SIZE * sizeof(char));
 		if (!buffer)
 			return (NULL);
 		buffer_dir = buffer;			// First time we save mem, remember the true dir of the buffer to free
-			*bytes_readed += read(fd, buffer, BUFFER_SIZE);
-		if (bytes_readed == 0)
+			bytes = read(fd, buffer, BUFFER_SIZE);
+			*bytes_readed += bytes;
+		if (bytes == 0)			// Check a void document
 			return (NULL);
 	}
 	line = trim_endl(&buffer);
+	if (!buffer || !*buffer)					// If buff is end and read gives more, strjoin
+	{
+		free(buffer_dir);
+		buffer = (char *) malloc(BUFFER_SIZE * sizeof(char));
+		if (!buffer)
+			return (NULL);
+		buffer_dir = buffer;			// First time we save mem, remember the true dir of the buffer to free
+		bytes = read(fd, buffer, BUFFER_SIZE);
+		*bytes_readed += bytes;
+		if (bytes == 0)
+			return (NULL);
+		new_line = ft_strjoin(line, trim_endl(&buffer));
+		total_bytes += ft_strlen(new_line);
+		free(line);
+		return (new_line);
+	}					// Here must check if the buff is ended. And if its ended, get 
 	*total_bytes += ft_strlen(line);
 	if(!line)
 		return (NULL);
