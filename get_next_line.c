@@ -36,47 +36,8 @@ char	*trim_endl(char **buffer)
 }
 
 
-
-
-/** Crear funcion que resetee el buffer y tambien saque otra linea
- * Si hay mas que leer, crea un nuevo buffer y hace un join a lo que quedaba de linea
- * 
- */
-// void	ft_join_buffer(char **buffer, char **buffer_dir, char **line)
-// {
-// 	char	*last_line;
-
-	
-// 	last_line = *line;
-// 	free(*line);
-
-// 	if (!buffer && *total_bytes >= *bytes_readed)
-// 		free(buffer_dir);
-// 	if (!buffer || *total_bytes >= *bytes_readed)
-// 	{
-// 		buffer = (char *) malloc(BUFFER_SIZE * sizeof(char));
-// 		if (!buffer)
-// 			return (NULL);
-// 		buffer_dir = buffer;			// First time we save mem, remember the true dir of the buffer to free
-// 			*bytes_readed += read(fd, buffer, BUFFER_SIZE);
-// 		if (bytes_readed == 0)
-// 			return (NULL);
-// 	}
-
-
-
-
-
-
-
-// 	ft_strjoin(last_line, )
-// }
-
-
-
-
 /**
- * Function that reads a file until a \n or \0 is found.
+ * Function that reads a file until a \n or \0 is found or Buff ends
  *
  * @param fd As an argument we give a file descriptor prev got with open()
  *
@@ -132,7 +93,6 @@ char	*get_next_line(int fd)
 	static int	bytes_readed;
 	char	*tmp;
 	
-	//total_bytes = 0;
 	line = read_document(fd, &total_bytes, &bytes_readed);
 	if (!line)
 	{
