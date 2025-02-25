@@ -13,6 +13,21 @@
 #include "get_next_line.h"
 
 
+
+/*
+ * s1 is buffer
+ * s2 is tmp
+*/
+char	*buffer_join(char *s1, char *s2)
+{
+	char	*new_buffer;
+
+	if (!s1)
+		s1 = ft_strdup("");
+	new_buffer = ft_strjoin(s1, s2);	//TODO Aqui si n se hace en la funcion exterior tmbn free
+	return (new_buffer);
+}
+
 /**
  * Gets one line from the buffer recieved, and moves the buffer pointer to the
  * end of the line
@@ -26,6 +41,7 @@ char	*trim_endl(char **buffer)
 
 	if (!**buffer)
 		return (NULL);
+
 	buf = *buffer;
 	i = 0;
 	while (buf[i] != '\n' &&  buf[i] != '\0')
@@ -43,66 +59,39 @@ char	*trim_endl(char **buffer)
  *
  * @return A buffer with the string of the x line of the file.
  */
-char	*read_document(int fd, int *total_bytes, int *bytes_readed)
+char	**ft_read(int fd, char **buffer)
 {
-	static char	*buffer;
-	char	*line;
-	static char	*buffer_dir;
-	char	*new_line;		// Only when the buff ended and the content continue
-	int	bytes;
+	char	*tmp_buff;
+	char	*buff_dir;
+	char	*ss;
+	size_t	bytes_readed;
 
-	if (!buffer || *total_bytes >= *bytes_readed)
-	{
-		buffer = (char *) malloc(BUFFER_SIZE * sizeof(char));
-		if (!buffer)
-			return (NULL);
-		buffer_dir = buffer;			// First time we save mem, remember the true dir of the buffer to free
-			bytes = read(fd, buffer, BUFFER_SIZE);
-			*bytes_readed += bytes;
-		if (bytes == 0)			// Check a void document
-			return (NULL);
-	}
-	line = trim_endl(&buffer);
-	if (!buffer || !*buffer)					// If buff is end and read gives more, strjoin
-	{
-		free(buffer_dir);
-		buffer = (char *) malloc(BUFFER_SIZE * sizeof(char));
-		if (!buffer)
-			return (NULL);
-		buffer_dir = buffer;			// First time we save mem, remember the true dir of the buffer to free
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		*bytes_readed += bytes;
-		if (bytes == 0)
-			return (NULL);
-		new_line = ft_strjoin(line, trim_endl(&buffer));
-		total_bytes += ft_strlen(new_line);
-		free(line);
-		return (new_line);
-	}					// Here must check if the buff is ended. And if its ended, get 
-	*total_bytes += ft_strlen(line);
-	if(!line)
+	tmp_buff = (char *) malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!tmp_buff)
 		return (NULL);
-	return (line);
+	bytes_readed = 1;
+	
+	// Aqui hay que ir leyendo todo el rato hasta que bytes readed < 0 o se encuentre '\n'
+	while (bytes_readed > 0 && !ft_strchr(*buffer, '\n'))
+	{
+		bytes_readed = read(fd, tmp_buff, BUFFER_SIZE);
+		tmp_buff[BUFFER_SIZE] = '\0';
+		buff_dir = *buffer;
+		*buffer = buffer_join(*buffer, tmp_buff);	//TODO Aqui creo que se deberia hacer un free del buffer original
+		//free(buff_dir);
+	}
+	free(tmp_buff);
+	return (buffer);
 }
-//TODO When the buff ends, if the read get something, coninue looping
 
 char	*get_next_line(int fd)
 {
-	char *line;
-	static int	total_bytes;
-	static int	bytes_readed;
-	char	*tmp;
+	static char	*buffer;
+	char	*line;
 	
-	line = read_document(fd, &total_bytes, &bytes_readed);
+	ft_read(fd, &buffer);
+	line = trim_endl(&buffer);
 	if (!line)
-	{
-		if (bytes_readed)
-		{
-			read(fd, tmp, total_bytes);
-			line = read_document(fd, &total_bytes, &bytes_readed);
-		}
-		else
-			return (NULL);
-	}
+		return (NULL);
 	return (line);
 }
