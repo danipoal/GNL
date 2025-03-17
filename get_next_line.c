@@ -18,7 +18,8 @@ static void	ft_buffjoin(char **buffer, char *tmp_buffer)
 
 	tmp = *buffer;
 	*buffer = ft_strjoin(*buffer , tmp_buffer);
-	free(tmp);
+	if (tmp) 	//Evitar doble free
+		free(tmp);
 }
 
 static void	ft_next_line(char **buffer)
@@ -38,10 +39,8 @@ static void	ft_next_line(char **buffer)
 
 static char	*ft_get_line(char **buffer)
 {
-	char *tmp;
 	int	i;
 
-	tmp = *buffer;
 	i = 0;
 	while ((*buffer)[i] && (*buffer)[i] != '\n')
 		i++;
@@ -58,11 +57,12 @@ static void	ft_read(int fd, char **buffer)
 	tmp_buffer = (char *) malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!tmp_buffer)
 		return ;
+	*tmp_buffer = '\0';	//Init to fix uninitialited warning
 	read_bytes = 1;
 	while (read_bytes > 0 && !ft_strchr(tmp_buffer, '\n'))
 	{
 		read_bytes = read(fd, tmp_buffer, BUFFER_SIZE);
-		if (read_bytes < 0)   // Error al leer
+		if (read_bytes <= 0)   // Error al leer
 		{
 			free(tmp_buffer);
 			return ;
@@ -84,7 +84,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	ft_read(fd, &buffer);
-	if (!*buffer)
+	if (!buffer || !*buffer)
 	{
 		free(buffer);
 		return (NULL);
