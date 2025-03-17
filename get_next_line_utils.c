@@ -12,124 +12,96 @@
 
 #include "get_next_line.h"
 
-size_t ft_strlen(const char *s)
+size_t	ft_strlen(const char *str)
 {
-	size_t size;
+	int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
 
 	if (!s)
-		return (0);
-	size = 0;
-	while (s[size] != '\0')
-		size++;
-	return (size);
-}
-
-size_t ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	unsigned long i;
-
-	if (size == 0)
-		return (ft_strlen(src));
-	i = 0;
-	while (i < size - 1 && src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (ft_strlen(src));
-}
-
-char *ft_strdup(const char *s)
-{
-	int i;
-	char *str;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	str = (char *)malloc((i + 1) * sizeof(char));
-	if (str == NULL)
 		return (NULL);
 	i = 0;
-	while (s[i])
-	{
-		str[i] = s[i];
+	while (s[i] != c && s[i])
 		i++;
-	}
-	str[i] = '\0';
-	return (str);
+	if (c == s[i])
+		return ((char *)&s[i]);
+	return (NULL);
 }
 
-/**
- * Devolver una substring a partir de start con longitud len.
- *
- * If len is larger than strlen - start, then cut until the end.
- */
-
-char *ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_strdup(const char *str)
 {
-	char *str;
-	size_t i;
-	size_t s_len;
+	char	*ptr;
+	size_t	len;
+	size_t	i;
+
+	len = ft_strlen(str);
+	ptr = (char *)malloc((len + 1) * sizeof(char));
+	if (ptr == NULL)
+		return (NULL);
+	i = -1;
+	while (++i < len)
+		ptr[i] = str[i];
+	ptr[i] = '\0';
+	return (ptr);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	size_t	s_len;
+	char	*substr;
 
 	if (!s)
 		return (NULL);
 	s_len = ft_strlen(s);
 	if (start >= s_len)
 		return (ft_strdup(""));
-	if (len > s_len - start)
+	if (start + len > s_len)
 		len = s_len - start;
-	str = (char *)malloc((len + 1) * sizeof(char));
-	if (!str)
+	substr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!substr)
 		return (NULL);
-	i = 0;
-	while (i < len && s[start + i])
-	{
-		str[i] = s[start + i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
+	i = -1;
+	while (++i < len)
+		substr[i] = s[start + i];
+	substr[i] = '\0';
+	return (substr);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	if (!s)
+	char	*ptr;
+	size_t	s1_len;
+	size_t	s2_len;
+	size_t	i;
+
+	if (!s1 && !s2)
 		return (NULL);
-	while (*s != (char) c && *s)
-		s++;
-	if (*s == (char) c)
-		return ((char *) s);
-	
-}
-
-/**
- * Concat two strings saving memory for it
- * @return String created
- */
-
-char *ft_strjoin(char const *s1, char const *s2)
-{
-	int i;
-	int j;
-	char *str;
-
-	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!str)
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	ptr = (char *)malloc((s1_len + s2_len + 1) * sizeof(char));
+	if (ptr == NULL)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		str[i + j] = s2[j];
-		j++;
-	}
-	str[i + j] = '\0';
-	return (str);
+	i = -1;
+	while (++i < s1_len)
+		ptr[i] = s1[i];
+	i = -1;
+	while (++i < s2_len)
+		ptr[s1_len + i] = s2[i];
+	ptr[s1_len + s2_len] = '\0';
+	return (ptr);
 }
