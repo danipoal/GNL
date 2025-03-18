@@ -1,0 +1,48 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test_output:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Paso 1: Clonar el repositorio
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Paso 2: Instalar dependencias necesarias para compilación
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y build-essential
+      
+    # Paso 3: Ejecutar el Makefile inicial en el directorio raíz
+    - name: Build the main project
+      run: | 
+        make bonus
+    # Paso 4: Ejecutar el Makefile en el directorio /test
+    - name: Build tests
+      run: |
+        cd test
+        make bonus
+
+    # Paso 5: Ejecutar el archivo ./test y capturar la salida
+    - name: Run tests and capture output
+      run: |
+        cd test
+        ./test > program_output.txt
+        continue-on-error: true
+
+    # Paso 6: Verificar si el output tenia return 0 o fallo
+    - name: Verify test result
+      run: |
+        if [ $? -eq 0 ]; then
+          echo "Test passed!"
+          exit 0
+        else
+          echo "Test failed!"
+          exit 1
+        fi
