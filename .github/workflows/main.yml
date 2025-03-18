@@ -33,7 +33,7 @@ jobs:
     - name: Run tests and capture output
       run: |
         cd test
-        ./test > program_output.txt
+        ./a.out > program_output.txt
         continue-on-error: true
 
     # Paso 6: Verificar si el output tenia return 0 o fallo
