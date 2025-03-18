@@ -75,22 +75,22 @@ static void	ft_read(int fd, char **buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
 		return (NULL);
 	}
-	ft_read(fd, &buffer);
-	if (!buffer || !*buffer)
+	ft_read(fd, &buffer[fd]);
+	if (!buffer[fd] || !*buffer[fd])
 	{
-		free(buffer);
+		free(buffer[fd]);
 		return (NULL);
 	}
-	line = ft_get_line(&buffer);
+	line = ft_get_line(&buffer[fd]);
 	if (!line)
 		return (NULL);
-	ft_next_line(&buffer);
+	ft_next_line(&buffer[fd]);
 	return (line);
 }
