@@ -6,7 +6,7 @@
 /*   By: danalvar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 15:15:25 by danalvar          #+#    #+#             */
-/*   Updated: 2025/03/18 15:43:05 by danalvar         ###   ########.fr       */
+/*   Updated: 2025/03/19 19:45:52 by danalvar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	test_bonus()
 
 int	main(void)
 {
-/*	int		fd;
+	int		fd;
 	char	*s;
 
 	fd = open("example.txt", O_RDONLY);
@@ -60,7 +60,7 @@ int	main(void)
 	}
 	close(fd);
 
-*/	//Bonus
+	//Bonus
 	write(1, "\nBONUS:\n", 8);
 	test_bonus();
 	return (0);

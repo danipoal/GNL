@@ -6,11 +6,11 @@
 /*   By: danalvar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 22:34:31 by danalvar          #+#    #+#             */
-/*   Updated: 2025/03/18 15:07:15 by danalvar         ###   ########.fr       */
+/*   Updated: 2025/03/19 19:45:26 by danalvar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static void	ft_buffjoin(char **buffer, char *tmp_buffer)
 {
@@ -86,6 +86,7 @@ char	*get_next_line(int fd)
 	if (!buffer[fd] || !*buffer[fd])
 	{
 		free(buffer[fd]);
+		buffer[fd] = NULL;
 		return (NULL);
 	}
 	line = ft_get_line(&buffer[fd]);
